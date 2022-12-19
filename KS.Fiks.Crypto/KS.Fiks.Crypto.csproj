@@ -44,8 +44,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Portable.BouncyCastle" Version="1.8.10"/>
-        <PackageReference Include="KS.Fiks.QA" Version="1.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+        <PackageReference Include="KS.Fiks.QA" Version="1.0.0" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>
