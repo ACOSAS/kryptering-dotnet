@@ -12,7 +12,7 @@
         <RepositoryUrl>git@github.com:ks-no/kryptering-dotnet.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>FIKS</PackageTags>
-        <VersionPrefix>1.0.5</VersionPrefix>
+        <VersionPrefix>1.0.6</VersionPrefix>
         <PackageIconUrl>https://ks-no.github.io/images/favicon.png</PackageIconUrl>
         <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
         <IncludeSymbols>true</IncludeSymbols>
