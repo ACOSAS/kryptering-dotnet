@@ -13,6 +13,7 @@ namespace KS.Fiks.Crypto.Tests
     {
         private const string TextFileResource = "LoremIpsum.txt";
         private const string PrivateKeyResource = "fiks_demo_private.pem";
+        private const string InvalidKeyResource = "invalid.pem";
         private const string PublicCertificateResource = "fiks_demo_public.pem";
 
         public static string ReadTestData()
@@ -24,10 +25,20 @@ namespace KS.Fiks.Crypto.Tests
         {
             return GetContentFromResource(PrivateKeyResource);
         }
+        
+        public static string ReadInvalidPrivateKeyPem()
+        {
+            return GetContentFromResource(InvalidKeyResource);
+        }
 
         public static AsymmetricKeyParameter ReadPrivateKey()
         {
             return AsymmetricKeyParameterReader.ExtractPrivateKey(ReadPrivateKeyPem());
+        }
+        
+        public static AsymmetricKeyParameter ReadInvalidPrivateKey()
+        {
+            return AsymmetricKeyParameterReader.ExtractPrivateKey(ReadInvalidPrivateKeyPem());
         }
 
         public static string ReadPublicCertificatePem()

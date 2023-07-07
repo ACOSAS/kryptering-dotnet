@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using KS.Fiks.Crypto.BouncyCastle;
 using Org.BouncyCastle.Crypto;
 
@@ -10,11 +12,27 @@ namespace KS.Fiks.Crypto
     /// </summary>
     public class DecryptionService : IDecryptionService
     {
-        private readonly AsymmetricKeyParameter _privateKey;
+        private readonly IReadOnlyCollection<AsymmetricKeyParameter> _privateKeys;
 
         internal DecryptionService(AsymmetricKeyParameter privateKey)
         {
-            this._privateKey = privateKey ?? throw new ArgumentNullException(nameof(privateKey));
+            if (privateKey == null)
+            {
+                throw new ArgumentNullException(nameof(privateKey));
+            }
+
+            _privateKeys = new List<AsymmetricKeyParameter> {privateKey};
+        }
+        
+        internal DecryptionService(IEnumerable<AsymmetricKeyParameter> privateKeys)
+        {
+
+            if (privateKeys == null)
+            {
+                throw new ArgumentNullException(nameof(privateKeys));
+            }
+
+            _privateKeys = privateKeys.ToList();
         }
 
         /// <summary>
@@ -22,9 +40,21 @@ namespace KS.Fiks.Crypto
         /// </summary>
         /// <param name="privateKey">the private key to be used for decryption</param>
         /// <returns>a new instance of the DecryptionService</returns>
-        public static DecryptionService Create(AsymmetricKeyParameter privateKey)
+        public static DecryptionService Create(
+            AsymmetricKeyParameter privateKey)
         {
             return new DecryptionService(privateKey);
+        }
+        
+        /// <summary>
+        /// Creates a new instance using the provided private key for decryption
+        /// </summary>
+        /// <param name="pemStringPrivateKeys"></param>
+        /// <returns>a new instance of the DecryptionService</returns>
+        public static DecryptionService Create(
+            IEnumerable<AsymmetricKeyParameter> pemStringPrivateKeys)
+        {
+            return new DecryptionService(pemStringPrivateKeys);
         }
 
         /// <summary>
@@ -37,6 +67,11 @@ namespace KS.Fiks.Crypto
             return Create(AsymmetricKeyParameterReader.ExtractPrivateKey(pemStringPrivateKey));
         }
 
+        public static DecryptionService Create(IEnumerable<string> pemStringPrivateKey)
+        {
+            return Create(pemStringPrivateKey.Select(AsymmetricKeyParameterReader.ExtractPrivateKey));
+        }
+
         public Stream Decrypt(Stream encryptedStream)
         {
             if (!encryptedStream.CanRead)
@@ -44,7 +79,7 @@ namespace KS.Fiks.Crypto
                 throw new ArgumentException("Stream is not readable", nameof(encryptedStream));
             }
 
-            return DecryptStreamConverter.Decrypt(this._privateKey, encryptedStream);
+            return DecryptStreamConverter.Decrypt(_privateKeys, encryptedStream);
         }
     }
 }
