@@ -23,7 +23,7 @@ namespace KS.Fiks.Crypto
 
             _privateKeys = new List<AsymmetricKeyParameter> {privateKey};
         }
-        
+
         internal DecryptionService(IEnumerable<AsymmetricKeyParameter> privateKeys)
         {
 
@@ -45,11 +45,11 @@ namespace KS.Fiks.Crypto
         {
             return new DecryptionService(privateKey);
         }
-        
+
         /// <summary>
         /// Creates a new instance using the provided private key for decryption
         /// </summary>
-        /// <param name="pemStringPrivateKeys"></param>
+        /// <param name="pemStringPrivateKeys">pemStringPrivateKeys</param>
         /// <returns>a new instance of the DecryptionService</returns>
         public static DecryptionService Create(
             IEnumerable<AsymmetricKeyParameter> pemStringPrivateKeys)
