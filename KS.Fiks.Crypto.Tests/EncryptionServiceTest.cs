@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
-using FluentAssertions;
 using KS.Fiks.Crypto.BouncyCastle;
+using Shouldly;
 using Xunit;
 
 namespace KS.Fiks.Crypto.Tests
@@ -11,14 +11,14 @@ namespace KS.Fiks.Crypto.Tests
         [Fact(DisplayName = "Create using PEM string")]
         public void CreatePem()
         {
-            EncryptionService.Create(TestDataUtil.ReadPublicCertificatePem()).Should().NotBeNull();
+            EncryptionService.Create(TestDataUtil.ReadPublicCertificatePem()).ShouldNotBeNull();
         }
 
         [Fact(DisplayName = "Create using X509 certificate")]
         public void CreateCert()
         {
             EncryptionService.Create(X509CertificateReader.ExtractCertificate(TestDataUtil.ReadPublicCertificatePem()))
-                .Should().NotBeNull();
+                .ShouldNotBeNull();
         }
 
         [Fact(DisplayName = "Encrypt data")]
@@ -44,7 +44,7 @@ namespace KS.Fiks.Crypto.Tests
                 decryptedStream.CopyTo(decryptionBuffer);
                 var decryptedData = decryptionBuffer.ToArray();
                 var decryptedString = Encoding.UTF8.GetString(decryptedData);
-                decryptedString.Should().Be(testDataContent);
+                decryptedString.ShouldBe(testDataContent);
             }
         }
 

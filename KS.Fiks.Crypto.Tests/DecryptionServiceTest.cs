@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace KS.Fiks.Crypto.Tests
@@ -11,13 +11,13 @@ namespace KS.Fiks.Crypto.Tests
         [Fact(DisplayName = "Create using PEM")]
         public void CreatePem()
         {
-            DecryptionService.Create(TestDataUtil.ReadPrivateKeyPem()).Should().NotBeNull();
+            DecryptionService.Create(TestDataUtil.ReadPrivateKeyPem()).ShouldNotBeNull();
         }
 
         [Fact(DisplayName = "Create using private key")]
         public void CreatePrivateKey()
         {
-            DecryptionService.Create(TestDataUtil.ReadPrivateKey()).Should().NotBeNull();
+            DecryptionService.Create(TestDataUtil.ReadPrivateKey()).ShouldNotBeNull();
         }
 
         [Fact(DisplayName = "Decryption")]
@@ -36,7 +36,7 @@ namespace KS.Fiks.Crypto.Tests
                     var decryptedDataString = Encoding.UTF8.GetString(decryptedDataChunk)?.TrimEnd();
 
                     decryptedDataString.Equals(unencryptedDataChunk, StringComparison.InvariantCulture)
-                        .Should().BeTrue();
+                        .ShouldBeTrue();
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace KS.Fiks.Crypto.Tests
             var decryptedDataString = Encoding.UTF8.GetString(decryptedDataChunk).TrimEnd();
 
             decryptedDataString.Equals(unencryptedDataChunk, StringComparison.InvariantCulture)
-                .Should().BeTrue();
+                .ShouldBeTrue();
         }
 
         private static byte[] Encrypt(string unencryptedData)

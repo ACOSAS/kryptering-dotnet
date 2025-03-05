@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using KS.Fiks.Crypto.BouncyCastle;
+﻿using KS.Fiks.Crypto.BouncyCastle;
+using Shouldly;
 using Xunit;
 
 namespace KS.Fiks.Crypto.Tests.BouncyCastle
@@ -11,8 +11,8 @@ namespace KS.Fiks.Crypto.Tests.BouncyCastle
         {
             var privateKeyString = TestDataUtil.ReadPrivateKeyPem();
             var asymmetricKeyParameter = AsymmetricKeyParameterReader.ExtractPrivateKey(privateKeyString);
-            asymmetricKeyParameter.Should().NotBeNull();
-            asymmetricKeyParameter.IsPrivate.Should().BeTrue();
+            asymmetricKeyParameter.ShouldNotBeNull();
+            asymmetricKeyParameter.IsPrivate.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "Extract private RSA key")]
@@ -20,15 +20,15 @@ namespace KS.Fiks.Crypto.Tests.BouncyCastle
         {
             var privateRsaKeyString = TestDataUtil.GetContentFromResource("rsa_private_key.pem");
             var asymmetricKeyParameter = AsymmetricKeyParameterReader.ExtractPrivateKey(privateRsaKeyString);
-            asymmetricKeyParameter.Should().NotBeNull();
-            asymmetricKeyParameter.IsPrivate.Should().BeTrue();
+            asymmetricKeyParameter.ShouldNotBeNull();
+            asymmetricKeyParameter.IsPrivate.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "Extract non-key")]
         public void NotAPrivateKey()
         {
             var asymmetricKeyParameter = AsymmetricKeyParameterReader.ExtractPrivateKey("SOMETHING ELSE");
-            asymmetricKeyParameter.Should().BeNull();
+            asymmetricKeyParameter.ShouldBeNull();
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using KS.Fiks.Crypto.BouncyCastle;
+﻿using KS.Fiks.Crypto.BouncyCastle;
+using Shouldly;
 using Xunit;
 
 namespace KS.Fiks.Crypto.Tests.BouncyCastle
@@ -12,8 +12,8 @@ namespace KS.Fiks.Crypto.Tests.BouncyCastle
             using (var pemStream = TestDataUtil.GetContentStreamFromResource("fiks_demo_public.pem"))
             {
                 var pemObject = PemObjectReader.ReadPem(pemStream);
-                pemObject.Should().NotBeNull();
-                pemObject.Type.Should().Be("CERTIFICATE");
+                pemObject.ShouldNotBeNull();
+                pemObject.Type.ShouldBe("CERTIFICATE");
             }
         }
 
@@ -22,8 +22,8 @@ namespace KS.Fiks.Crypto.Tests.BouncyCastle
         {
             var privateKeyString = TestDataUtil.GetContentFromResource("fiks_demo_private.pem");
             var pemObject = PemObjectReader.ReadPem(privateKeyString);
-            pemObject.Should().NotBeNull();
-            pemObject.Type.Should().Be("PRIVATE KEY");
+            pemObject.ShouldNotBeNull();
+            pemObject.Type.ShouldBe("PRIVATE KEY");
         }
     }
 }

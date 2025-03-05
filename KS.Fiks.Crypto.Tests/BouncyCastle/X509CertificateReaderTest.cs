@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
-using KS.Fiks.Crypto.BouncyCastle;
+﻿using KS.Fiks.Crypto.BouncyCastle;
 using Org.BouncyCastle.Math;
+using Shouldly;
 using Xunit;
 
 namespace KS.Fiks.Crypto.Tests.BouncyCastle
@@ -16,9 +16,9 @@ namespace KS.Fiks.Crypto.Tests.BouncyCastle
             using (var pemStream = TestDataUtil.GetContentStreamFromResource("fiks_demo_public.pem"))
             {
                 var certificate = X509CertificateReader.ExtractCertificate(pemStream);
-                certificate.Should().NotBeNull();
-                certificate.IssuerDN.ToString().Should().Be(IssuerDN);
-                certificate.SubjectDN.ToString().Should().Be(SubjectDN);
+                certificate.ShouldNotBeNull();
+                certificate.IssuerDN.ToString().ShouldBe(IssuerDN);
+                certificate.SubjectDN.ToString().ShouldBe(SubjectDN);
             }
         }
 
@@ -27,11 +27,11 @@ namespace KS.Fiks.Crypto.Tests.BouncyCastle
         {
             var pemFile = TestDataUtil.GetContentFromResource("fiks_demo_public.pem");
             var certificate = X509CertificateReader.ExtractCertificate(pemFile);
-            certificate.Should().NotBeNull();
-            certificate.IssuerDN.ToString().Should().Be(IssuerDN);
-            certificate.SubjectDN.ToString().Should().Be(SubjectDN);
-            certificate.SigAlgName.Should().Be("SHA-256withRSA");
-            certificate.SerialNumber.Should().Be(new BigInteger("9386322399984342181"));
+            certificate.ShouldNotBeNull();
+            certificate.IssuerDN.ToString().ShouldBe(IssuerDN);
+            certificate.SubjectDN.ToString().ShouldBe(SubjectDN);
+            certificate.SigAlgName.ShouldBe("SHA-256withRSA");
+            certificate.SerialNumber.ShouldBe(new BigInteger("9386322399984342181"));
         }
     }
 }
